@@ -4,16 +4,39 @@ const messageContainer = document.getElementById("message-container");
 const messageForm = document.getElementById("send-container");
 const messageInput = document.getElementById("message-input");
 
+const appendMessage = (message) => {
+  const msgBox = document.createElement("div");
+  msgBox.textContent = message;
+  messageContainer.appendChild(msgBox);
+};
+
+// console.log("heelooooooooooo")const user = prompt("what is your name?")
+socket.emit("new user", user)
+appendMessage(`you joined the room`)
+
+
 socket.on("chat-message", (data) => {
-  console.log(data);
+  appendMessage(`${data.name}: ${data.message}`);
 });
 
-console.log("script working")
+socket.on("user-connected", (name) => {
+    appendMessage(`${name} connected`);
+  });
+
+  socket.on("user-disconnected", (name) => {
+    appendMessage(`${name} disconnected`);
+  });
+
+
+
 
 messageForm.addEventListener("submit", async (e) => {
-    // console.log("first subit button clicked")
   e.preventDefault();
   let message = messageInput.value;
-  socket.emit("send-chat-message", message)
-  message = "yes"
+  appendMessage(`you: ${message}`)
+  socket.emit("send-chat-message", message);
+  socket.emit("chat-message", message);
+  messageInput.value = ""
+  
 });
+
