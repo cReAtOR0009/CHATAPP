@@ -10,7 +10,8 @@ const appendMessage = (message) => {
   messageContainer.appendChild(msgBox);
 };
 
-// console.log("heelooooooooooo")const user = prompt("what is your name?")
+// console.log("heelooooooooooo")
+const user = prompt("what is your name?")
 socket.emit("new user", user)
 appendMessage(`you joined the room`)
 
