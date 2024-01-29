@@ -34,9 +34,9 @@ socket.on("user-connected", (name) => {
 messageForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   let message = messageInput.value;
+  const msgTime = new Date().toLocaleString()
   appendMessage(`you: ${message}`)
   socket.emit("send-chat-message", message);
-  socket.emit("chat-message", message);
   messageInput.value = ""
   
 });
